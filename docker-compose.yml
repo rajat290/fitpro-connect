@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'  # Yeh line rakho, warning aayegi but chalta hai
 services:
   postgres:
     image: postgres:13
@@ -11,6 +11,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fitpro_network
 
   mongodb:
     image: mongo:5
@@ -22,6 +24,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - fitpro_network
 
   redis:
     image: redis:6-alpine
@@ -30,8 +34,14 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    networks:
+      - fitpro_network
 
 volumes:
   postgres_data:
   mongo_data:
   redis_data:
+
+networks:
+  fitpro_network:
+    driver: bridge
